@@ -5,17 +5,16 @@ module.exports = function (app) {
 
     // GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON 
     app.get("/api/notes", function (req, res) {
-        //res.sendFile(path.join(__dirname, "db.json"))
         fs.readFile("./db/db.json", 'utf8', function (error, notes) {
             if (error) {
-                throw error
+                throw error;
             } else {
-                let data = JSON.parse(notes)
-                notesData = [].concat(data)
-                res.json(notesData)
-            }
-        })
-    })
+                let data = JSON.parse(notes);
+                notesData = [].concat(data);
+                res.json(notesData);
+            };
+        });
+    });
 
     // POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, 
     // and then return the new note to the client.
@@ -23,41 +22,40 @@ module.exports = function (app) {
         var newNote = req.body;
         fs.readFile("./db/db.json", "utf8", function (error, notes) {
             if (error) {
-                throw error
+                throw error;
             } else {
-                newNote.id = notes.length + 1
-                let data = JSON.parse(notes)
-                notesData = [].concat(data)
-                notesData.push(newNote)
+                newNote.id = Date.now();
+                let data = JSON.parse(notes);
+                notesData = [].concat(data);
+                notesData.push(newNote);
                 fs.writeFile("./db/db.json", JSON.stringify(notesData), function (error) {
                     if (error) {
-                        throw error
+                        throw error;
                     } else {
-                        res.json(newNote)
-                    }
-                })
-            }
-        })
-    })
+                        res.json(newNote);
+                    };
+                });
+            };
+        });
+    });
 
     app.delete("/api/notes/:id", function (req, res) {
         var noteToDelete = parseInt(req.params.id);
-        console.log(noteToDelete)
         fs.readFile("./db/db.json", "utf8", function (error, notes) {
             if (error) {
-                throw error
+                throw error;
             } else {
-                var notesData = [].concat(JSON.parse(notes))
-                var updatedNotesData = []
+                var notesData = [].concat(JSON.parse(notes));
+                var updatedNotesData = [];
                 updatedNotesData = notesData.filter((item) => item.id !== noteToDelete);
                 fs.writeFile("./db/db.json", JSON.stringify(updatedNotesData), function (error) {
                     if (error) {
-                        throw error
+                        throw error;
                     } else {
-                        res.send("success")
-                    }
-                })
-            }
-        })
-    })
-}
+                        res.send("success");
+                    };
+                });
+            };
+        });
+    });
+};
