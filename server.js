@@ -4,7 +4,6 @@ var app = express();
 var fs = require("fs")
 var PORT = process.env.PORT || 3000;
 
-var notes = require("./db/db.json");
 const { json } = require("express");
 
 app.use(express.urlencoded({ extended: true }));
