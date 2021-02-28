@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 app.get("/", function (req, res) {
-    res.json(path.join(__dirname, "public/index.html"));
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 // app.get("/notes", function (req, res) {
@@ -42,6 +42,6 @@ app.get("/", function (req, res) {
 
 // app.delete("")
 
-// app.listen(PORT, function () {
-//     console.log("App listening on PORT " + PORT);
-// })
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
+})
