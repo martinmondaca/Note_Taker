@@ -2,13 +2,17 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var fs = rquire("fs")
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 var notes = require("./db/db.json")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+app.get("/", function (req, res) {
+    res.json(path.join(__dirname, "public/index.html"))
+})
 
 app.get("/notes", function (req, res) {
     // fs.readFile("./db/db.json", (err, data) => {
