@@ -9,21 +9,22 @@ var notes = require("./db/db.json")
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// app.get("/notes", function (req, res) {
-//     // fs.readFile("./db/db.json", (err, data) => {
-//     //     if (err) {
-//     //         console.error(err)
-//     //         return
-//     //     }
-//     //     res.json(data)
-//     // })
-//     res.sendFile(path.join(__dirname, "public/notes.html"))
-// })
+app.get("/notes", function (req, res) {
+    // fs.readFile("./db/db.json", (err, data) => {
+    //     if (err) {
+    //         console.error(err)
+    //         return
+    //     }
+    //     res.json(data)
+    // })
+    res.sendFile(path.join(__dirname, "public/notes.html"))
+})
 
 // app.get("*", function (req, res) {
 //     res.sendFile(path.join(__dirname, "public/index.html"))
