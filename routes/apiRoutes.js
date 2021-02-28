@@ -1,3 +1,4 @@
+const { json } = require("express")
 var fs = require("fs")
 
 module.exports = function (app) {
@@ -10,8 +11,8 @@ module.exports = function (app) {
                 throw error
             } else {
                 let data = JSON.parse(notes)
-                notesObj = [].concat(data)
-                res.json(notesObj)
+                notesData = [].concat(data)
+                res.json(notesData)
             }
         })
     })
@@ -19,7 +20,6 @@ module.exports = function (app) {
     // POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, 
     // and then return the new note to the client.
     app.post("/api/notes", function (req, res) {
-
         var newNote = req.body;
         fs.readFile("./db/db.json", "utf8", function (error, notes) {
             if (error) {
@@ -27,9 +27,9 @@ module.exports = function (app) {
             } else {
                 newNote.id = notes.length + 1
                 let data = JSON.parse(notes)
-                notesObj = [].concat(data)
-                notesObj.push(newNote)
-                fs.writeFile("./db/db.json", JSON.stringify(notesObj), function (error) {
+                notesData = [].concat(data)
+                notesData.push(newNote)
+                fs.writeFile("./db/db.json", JSON.stringify(notesData), function (error) {
                     if (error) {
                         throw error
                     } else {
@@ -40,8 +40,24 @@ module.exports = function (app) {
         })
     })
 
-    app.delete("/api/notes:id", function (req, res) {
-        var noteToDelete = req.params.id;
-
+    app.delete("/api/notes/:id", function (req, res) {
+        var noteToDelete = parseInt(req.params.id);
+        console.log(noteToDelete)
+        fs.readFile("./db/db.json", "utf8", function (error, notes) {
+            if (error) {
+                throw error
+            } else {
+                var notesData = [].concat(JSON.parse(notes))
+                var updatedNotesData = []
+                updatedNotesData = notesData.filter((item) => item.id !== noteToDelete);
+                fs.writeFile("./db/db.json", JSON.stringify(updatedNotesData), function (error) {
+                    if (error) {
+                        throw error
+                    } else {
+                        res.send("success")
+                    }
+                })
+            }
+        })
     })
 }
