@@ -1,7 +1,7 @@
 var express = require("express");
 var path = require("path");
 var app = express();
-var fs = rquire("fs")
+var fs = require("fs")
 var PORT = process.env.PORT || 3000;
 
 var notes = require("./db/db.json")
