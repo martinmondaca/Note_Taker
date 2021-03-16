@@ -39,7 +39,7 @@ No prior installation is required to use the Note Taker application. Simply head
   1. Click the 'Get Started' button in order to start writing notes.
   1. Type the note title in 'Note Title', and type note text in 'Note Text'.
   1. Click the save button toward the top-right to save the current note.
-    1. The note will then appear on the left column.
+    * The note will then appear on the left column.
   1. Click any saved note on the left column in order to view the note.
   1. Click the trash button next to a note in order to delete that note.
 
